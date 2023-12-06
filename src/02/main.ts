@@ -1,5 +1,5 @@
 import input from "./input.txt";
-import { add, groupBy } from "../utils";
+import { add, groupBy, mul } from "../utils";
 
 const elfQuery = { red: 12, green: 13, blue: 14 };
 type Color = keyof typeof elfQuery;
@@ -24,7 +24,7 @@ const getGamePowerTotal = (games: Draw[][]) =>
 const getGamePower = (game: Draw[]) =>
   Object.values(groupBy(game, (d) => d.color))
     .map((draws) => Math.max(...draws.map((d) => d.count)))
-    .reduce((a, b) => a * b, 1);
+    .reduce(mul, 1);
 
 const parseGame = (line: string): Draw[] => {
   return line.split(":")[1].split(/,|;/).map(parseDraw);

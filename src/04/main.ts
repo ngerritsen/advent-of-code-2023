@@ -1,4 +1,4 @@
-import { add } from "../utils";
+import { add } from "lodash";
 import input from "./input.txt";
 
 type Cache = Record<string, number>;

@@ -1,4 +1,4 @@
-import { isNumber } from "../utils";
+import { isNumeric } from "../utils";
 import input from "./input.txt";
 
 const main = () => {
@@ -13,7 +13,7 @@ const getSumOfValidNums = (grid: string[]) => {
 
   for (let y = 0; y < grid.length; y++) {
     for (let x = 0; x < grid[y].length; x++) {
-      if (!isNumber(grid[y][x])) continue;
+      if (!isNumeric(grid[y][x])) continue;
 
       const num = resolveNum(grid[y], x);
 
@@ -53,15 +53,15 @@ const getGearNums = (grid: string[], x: number, y: number) =>
     .map(Number);
 
 const getRowNums = (row: string, x: number) =>
-  isNumber(row[x])
+  isNumeric(row[x])
     ? [resolveNum(row, x)]
-    : [-1, 1].map((v) => isNumber(row[x + v]) && resolveNum(row, x + v));
+    : [-1, 1].map((v) => isNumeric(row[x + v]) && resolveNum(row, x + v));
 
 const resolveNum = (row: string, x: number) =>
   resolveNumDir(row, x, "", -1) + resolveNumDir(row, x, row[x], 1);
 
 const resolveNumDir = (row: string, x: number, s: string, v: 1 | -1): string =>
-  isNumber(row[x + v])
+  isNumeric(row[x + v])
     ? resolveNumDir(row, x + v, v > 0 ? s + row[x + v] : row[x + v] + s, v)
     : s;
 

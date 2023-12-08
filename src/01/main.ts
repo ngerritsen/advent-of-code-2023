@@ -1,4 +1,5 @@
-import { add, isNumber, last } from "../utils";
+import { add, last } from "lodash";
+import { isNumeric } from "../utils";
 import input from "./input.txt";
 
 const nums = [
@@ -28,7 +29,7 @@ const replaceNumbers = (line: string) =>
     .replace(rx, (m) => String(nums.indexOf(m) + 1));
 
 const getValue = (line: string) => addNums(getNums(line));
-const getNums = (line: string) => line.split("").map(Number).filter(isNumber);
-const addNums = (nums: number[]) => nums[0] * 10 + last(nums);
+const getNums = (line: string) => line.split("").map(Number).filter(isNumeric);
+const addNums = (nums: number[]) => nums[0] * 10 + Number(last(nums));
 
 main();

@@ -1,10 +1,12 @@
-import { mul } from "../utils";
+import { multiply } from "lodash";
 import input from "./input.txt";
 
 const main = () => {
   const [times, records] = parseRaces(input);
 
-  console.log(times.map((t, i) => getWaysToWin(t, records[i])).reduce(mul, 1));
+  console.log(
+    times.map((t, i) => getWaysToWin(t, records[i])).reduce(multiply, 1),
+  );
   console.log(getWaysToWin(Number(times.join("")), Number(records.join(""))));
 };
 
@@ -13,6 +15,7 @@ const getWaysToWin = (time: number, record: number) => {
     const d = i * (time - i);
     if (d > record) return time - (i - 1) * 2 - 1;
   }
+  return -1;
 };
 
 const parseRaces = (input: string) =>

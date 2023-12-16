@@ -17,21 +17,16 @@ const makeBoxes = (n: number): Box[] => Array.from(Array(n)).map(() => []);
 const hashmap = (boxes: Box[], step: string) => {
   const [, label, op, f] = step.match(/(\w+)(=|-)(\d*)/) || [];
   const box = hash(label);
+  const i = boxes[box].findIndex((l) => l[0] === label);
 
-  if (op === "-") {
-    boxes[box] = boxes[box].filter((l) => l[0] !== label);
+  if (op === "-" && i > -1) {
+    boxes[box].splice(i, 1);
   } else if (op === "=") {
-    let updated = false;
-
-    for (const l of boxes[box]) {
-      if (l[0] === label) {
-        l[1] = Number(f);
-        updated = true;
-        break;
-      }
+    if (i > -1) {
+      boxes[box][i][1] = Number(f);
+    } else {
+      boxes[box].push([label, Number(f)]);
     }
-
-    if (!updated) boxes[box].push([label, Number(f)]);
   }
 
   return boxes;

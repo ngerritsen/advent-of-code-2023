@@ -1,4 +1,5 @@
 import input from "./input.txt";
+import { lcm } from "../utils";
 
 type Nodes = Record<string, [string, string]>;
 
@@ -7,7 +8,9 @@ const main = () => {
 
   console.log(getStepsToEnd(nodes, turns, "AAA"));
   console.log(
-    lcmAll(getStartNodes(nodes).map((s) => getStepsToEnd(nodes, turns, s))),
+    getStartNodes(nodes)
+      .map((s) => getStepsToEnd(nodes, turns, s))
+      .reduce(lcm, 1),
   );
 };
 
@@ -38,9 +41,5 @@ const parseNodes = (raw: string) =>
     nodes[n] = [l, r];
     return nodes;
   }, {});
-
-const lcmAll = (arr: number[]): number => arr.reduce(lcm, arr[0]);
-const lcm = (a: number, b: number) => (a * b) / gcd(a, b);
-const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
 
 main();

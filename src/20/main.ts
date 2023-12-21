@@ -53,12 +53,12 @@ const count = (modules: Record<string, Module>, n: number) => {
 
 const run = (modules: Record<string, Module>, track?: string) => {
   type Signal = [string, string, 0 | 1];
-  const stack: Signal[] = [["button", "broadcaster", 0]];
+  const queue: Signal[] = [["button", "broadcaster", 0]];
   const pulses = [0, 0];
   const tracked: string[] = [];
 
-  while (stack.length) {
-    let [from, to, p] = stack.shift() as Signal;
+  while (queue.length) {
+    let [from, to, p] = queue.shift() as Signal;
 
     pulses[p] += 1;
 
@@ -82,7 +82,7 @@ const run = (modules: Record<string, Module>, track?: string) => {
       }
     }
 
-    m.targets.forEach((t) => stack.push([to, t, p]));
+    m.targets.forEach((t) => queue.push([to, t, p]));
   }
 
   return { pulses, tracked };
